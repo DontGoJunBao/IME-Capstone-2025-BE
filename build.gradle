@@ -1,10 +1,10 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.4.5'
+	id 'java-library'
+	id 'org.springframework.boot' version '3.3.5'
 	id 'io.spring.dependency-management' version '1.1.7'
 }
 
-group = 'com.bossoverhere.capstone'
+group = 'capston.junbao'
 version = '0.0.1-SNAPSHOT'
 
 java {
@@ -24,13 +24,39 @@ repositories {
 }
 
 dependencies {
+	//스웨거 설정
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+
+	//data jpa 의존성
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
+	//h2 db(테스트환경에서 사용)
 	runtimeOnly 'com.h2database:h2'
+
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// Hypersistence Utils for JSON types
+	api 'io.hypersistence:hypersistence-utils-hibernate-62:3.7.0'
+
+	// Jackson 모듈: Jakarta XMLBind 어노테이션 지원
+	api 'com.fasterxml.jackson.module:jackson-module-jakarta-xmlbind-annotations:2.15.2'
+
+	implementation 'com.opencsv:opencsv:5.5'
+
+
+
+	//jwt 의존성 추가
+	implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
+	implementation 'io.jsonwebtoken:jjwt-impl:0.12.6'
+	implementation 'io.jsonwebtoken:jjwt-jackson:0.12.6'
+
+
 }
 
 tasks.named('test') {
