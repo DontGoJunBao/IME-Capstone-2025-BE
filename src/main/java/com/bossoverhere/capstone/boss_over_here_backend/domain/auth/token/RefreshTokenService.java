@@ -2,7 +2,7 @@ package com.bossoverhere.capstone.boss_over_here_backend.domain.auth.token;
 
 import com.bossoverhere.capstone.boss_over_here_backend.domain.auth.RefreshToken;
 import com.bossoverhere.capstone.boss_over_here_backend.domain.auth.dao.RefreshTokenRepository;
-import com.bossoverhere.capstone.boss_over_here_backend.domain.auth.dto.response.RefreshedTokens;
+import com.bossoverhere.capstone.boss_over_here_backend.domain.auth.dto.RefreshedTokens;
 import com.bossoverhere.capstone.boss_over_here_backend.domain.auth.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
