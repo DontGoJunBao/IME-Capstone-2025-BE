@@ -1,6 +1,7 @@
 package com.bossoverhere.capstone.boss_over_here_backend.global.config;
 
 
+import com.bossoverhere.capstone.boss_over_here_backend.domain.auth.jwt.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
