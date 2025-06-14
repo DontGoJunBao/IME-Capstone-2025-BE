@@ -4,6 +4,8 @@ import com.bossoverhere.capstone.boss_over_here_backend.domain.auth.OauthProvide
 import com.bossoverhere.capstone.boss_over_here_backend.domain.auth.OauthProviderResolver;
 import com.bossoverhere.capstone.boss_over_here_backend.domain.auth.dto.request.OauthLoginRequest;
 import com.bossoverhere.capstone.boss_over_here_backend.domain.auth.dto.response.OauthLoginResponse;
+import com.bossoverhere.capstone.boss_over_here_backend.domain.user.dao.UserRepository;
+import com.bossoverhere.capstone.boss_over_here_backend.domain.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

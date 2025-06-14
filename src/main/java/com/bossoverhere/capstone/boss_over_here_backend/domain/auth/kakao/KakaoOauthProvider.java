@@ -3,6 +3,7 @@ package com.bossoverhere.capstone.boss_over_here_backend.domain.auth.kakao;
 
 import com.bossoverhere.capstone.boss_over_here_backend.domain.auth.OauthClient;
 import com.bossoverhere.capstone.boss_over_here_backend.domain.auth.OauthProvider;
+import com.bossoverhere.capstone.boss_over_here_backend.domain.auth.domain.enums.OauthType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
