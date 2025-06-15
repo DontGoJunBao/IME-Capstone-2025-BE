@@ -1,5 +1,6 @@
 package com.bossoverhere.capstone.boss_over_here_backend.domain.valuepick.domain;
 
+import com.bossoverhere.capstone.boss_over_here_backend.domain.recommend.domain.Recommend;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -19,6 +20,9 @@ public class RecommendValuePick {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "recommend_id", nullable = false)
+    private Recommend recommend;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -37,6 +41,9 @@ public class RecommendValuePick {
         this.selectedAnswers = selectedAnswers;
     }
 
+    public void addRecommend(Recommend recommend) {
+        this.recommend = recommend;
+    }
 
 
 }
