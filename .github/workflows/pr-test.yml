@@ -46,8 +46,11 @@ jobs:
 
 
       - name: Test with Gradle
-        run: ./gradlew --info test
-
+        run: |
+          # JVM 프로퍼티를 태스크 앞쪽에 두기
+          ./gradlew --info \
+            -Dspring.jpa.defer-datasource-initialization=true \
+            test
       - name: 테스트 결과 Report
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
