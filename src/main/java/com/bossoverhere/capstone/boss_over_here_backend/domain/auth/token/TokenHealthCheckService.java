@@ -1,6 +1,8 @@
 package com.bossoverhere.capstone.boss_over_here_backend.domain.auth.token;
 
 import com.bossoverhere.capstone.boss_over_here_backend.domain.auth.jwt.JwtUtil;
+import com.bossoverhere.capstone.boss_over_here_backend.global.error.ApplicationException;
+import com.bossoverhere.capstone.boss_over_here_backend.global.error.SecurityErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

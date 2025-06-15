@@ -4,8 +4,10 @@ import com.bossoverhere.capstone.boss_over_here_backend.domain.auth.OauthProvide
 import com.bossoverhere.capstone.boss_over_here_backend.domain.auth.OauthProviderResolver;
 import com.bossoverhere.capstone.boss_over_here_backend.domain.auth.dto.request.OauthLoginRequest;
 import com.bossoverhere.capstone.boss_over_here_backend.domain.auth.dto.response.OauthLoginResponse;
+import com.bossoverhere.capstone.boss_over_here_backend.domain.auth.jwt.JwtUtil;
 import com.bossoverhere.capstone.boss_over_here_backend.domain.auth.token.AuthToken;
 import com.bossoverhere.capstone.boss_over_here_backend.domain.auth.token.AuthTokenGenerator;
+import com.bossoverhere.capstone.boss_over_here_backend.domain.auth.token.RefreshTokenService;
 import com.bossoverhere.capstone.boss_over_here_backend.domain.user.dao.UserRepository;
 import com.bossoverhere.capstone.boss_over_here_backend.domain.user.domain.User;
 import org.junit.jupiter.api.DisplayName;
@@ -28,84 +30,83 @@ class OauthServiceTest {
 
     @InjectMocks
     private OauthService oauthService;
-
     @Mock
     private OauthProviderResolver oauthProviderResolver;
-
+    @Mock
+    private JwtUtil jwtUtil;
     @Mock
     private UserRepository userRepository;
-
-
-    @Mock
-    private AuthTokenGenerator authTokenGenerator;
-
     @Mock
     private OauthProvider oauthProvider;
+    @Mock
+    private AuthTokenGenerator authTokenGenerator;
+    @Mock
+    private RefreshTokenService refreshTokenService;
 
     @Test
-    @DisplayName("처음 로그인 시 회원가입 후 액세스 및 리프레시 토큰 반환")
+    @DisplayName("처음 로그인에 성공하여 회원가입을 한 뒤 액세스,리프레시 토큰을 반환한다")
     void testFirstLogin_Success() {
-        // Given
-        String providerName = "kakao";
-        String oauthCredential = "testCredential";
-        String oauthId = providerName + "12345";
-        OauthLoginRequest request = new OauthLoginRequest(providerName, oauthCredential);
+        //given
+        String providerName = "provider";
+        String token = "oauth_token";
+        OauthLoginRequest request = new OauthLoginRequest(providerName, token);
+        String oauthId = providerName + "123456";
 
         when(oauthProviderResolver.find(providerName)).thenReturn(oauthProvider);
-        when(oauthProvider.getOAuthProviderUserId(oauthCredential)).thenReturn("12345");
+        when(oauthProvider.getOAuthProviderUserId(token)).thenReturn("123456");
         when(userRepository.findByOauthId(oauthId)).thenReturn(Optional.empty());
-
-        User newUser = User.builder().oauthId(oauthId).build();
-        ReflectionTestUtils.setField(newUser, "id", 1L);
-        when(userRepository.save(any(User.class))).thenReturn(newUser);
-
-        when(authTokenGenerator.generate(1L, oauthId)).thenReturn(new AuthToken("accessToken", "refreshToken"));
-
-        // When
-        OauthLoginResponse response = oauthService.login(request);
-
-        // Then
-        assertThat(response.getAccessToken()).isEqualTo("accessToken");
-        assertThat(response.getRefreshToken()).isEqualTo("refreshToken");
-    }
-
-    @Test
-    @DisplayName("이미 가입된 유저가 로그인 시 액세스 및 리프레시 토큰 반환")
-    void testNotFirstLogin_Success() {
-        // Given
-        String providerName = "kakao";
-        String oauthCredential = "testCredential";
-        String oauthId = providerName + "12345";
-        OauthLoginRequest request = new OauthLoginRequest(providerName, oauthCredential);
-
-        when(oauthProviderResolver.find(providerName)).thenReturn(oauthProvider);
-        when(oauthProvider.getOAuthProviderUserId(oauthCredential)).thenReturn("12345");
-
-        User existingUser = User.builder().oauthId(oauthId).build();
-        ReflectionTestUtils.setField(existingUser, "id", 1L);
-        when(userRepository.findByOauthId(oauthId)).thenReturn(Optional.of(existingUser));
-
-        when(authTokenGenerator.generate(1L, oauthId)).thenReturn(new AuthToken("accessToken", "refreshToken"));
+        User user = User.builder().oauthId(oauthId).build();
+        ReflectionTestUtils.setField(user, "id", 1L);
+        when(userRepository.save(any(User.class))).thenReturn(user);
+        when(authTokenGenerator.generate(1L, oauthId)).thenReturn(
+                new AuthToken("access_token", "refresh_token"));
 
         // When
         OauthLoginResponse response = oauthService.login(request);
 
         // Then
-        assertThat(response.getAccessToken()).isEqualTo("accessToken");
-        assertThat(response.getRefreshToken()).isEqualTo("refreshToken");
+        assertThat(response.getAccessToken()).isEqualTo("access_token");
+        assertThat(response.getRefreshToken()).isEqualTo("refresh_token");
     }
 
     @Test
-    @DisplayName("존재하지 않는 Provider로 로그인 요청 시 실패")
+    @DisplayName("존재하지 않는 Provider로 로그인을 요청하여 로그인에 실패한다.")
     void testLogin_Failure() {
         // Given
-        String providerName = "invalidProvider";
-        String oauthCredential = "testCredential";
-        OauthLoginRequest request = new OauthLoginRequest(providerName, oauthCredential);
+        String providerName = "nonexistent";
+        String token = "oauth_token";
+        OauthLoginRequest request = new OauthLoginRequest(providerName, token);
 
-        when(oauthProviderResolver.find(providerName)).thenThrow(new RuntimeException("Provider not found"));
+        // Mocking
+        when(oauthProviderResolver.find(providerName)).thenThrow(new RuntimeException());
 
         // When & Then
         assertThrows(RuntimeException.class, () -> oauthService.login(request));
+    }
+
+    @Test
+    @DisplayName("회원가입이 된 상태에서 로그인에 성공하여 액세스, 리프레시 토큰을 반환한다.")
+    void testNotFirstLogin_Success() {
+        //given
+        String providerName = "provider";
+        String token = "oauth_token";
+        OauthLoginRequest request = new OauthLoginRequest(providerName, token);
+        String oauthId = providerName + "123456";
+
+        when(oauthProviderResolver.find(providerName)).thenReturn(oauthProvider);
+        when(oauthProvider.getOAuthProviderUserId(token)).thenReturn("123456");
+        User existingUser = User.builder().oauthId(oauthId).build();
+        ReflectionTestUtils.setField(existingUser, "id", 1L);
+
+        when(userRepository.findByOauthId(oauthId)).thenReturn(Optional.of(existingUser));
+        when(authTokenGenerator.generate(1L, oauthId)).thenReturn(
+                new AuthToken("access_token", "refresh_token"));
+
+        // When
+        OauthLoginResponse response = oauthService.login(request);
+
+        // Then
+        assertThat(response.getAccessToken()).isEqualTo("access_token");
+        assertThat(response.getRefreshToken()).isEqualTo("refresh_token");
     }
 }

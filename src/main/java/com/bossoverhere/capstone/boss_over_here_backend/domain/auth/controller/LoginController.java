@@ -9,6 +9,7 @@ import com.bossoverhere.capstone.boss_over_here_backend.domain.auth.dto.response
 import com.bossoverhere.capstone.boss_over_here_backend.domain.auth.service.OauthService;
 import com.bossoverhere.capstone.boss_over_here_backend.domain.auth.token.RefreshTokenService;
 import com.bossoverhere.capstone.boss_over_here_backend.domain.auth.token.TokenHealthCheckService;
+import com.bossoverhere.capstone.boss_over_here_backend.global.common.dto.CommonResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
