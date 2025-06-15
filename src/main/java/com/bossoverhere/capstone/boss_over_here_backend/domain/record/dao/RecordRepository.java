@@ -1,5 +1,6 @@
 package com.bossoverhere.capstone.boss_over_here_backend.domain.record.dao;
 
+import com.bossoverhere.capstone.boss_over_here_backend.domain.record.domain.Record;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
