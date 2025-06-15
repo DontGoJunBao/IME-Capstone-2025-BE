@@ -3,6 +3,7 @@ package com.bossoverhere.capstone.boss_over_here_backend.domain.spot.service;
 import com.bossoverhere.capstone.boss_over_here_backend.domain.spot.dao.SpotRepository;
 import com.bossoverhere.capstone.boss_over_here_backend.domain.spot.domain.Spot;
 import com.bossoverhere.capstone.boss_over_here_backend.global.error.ApplicationException;
+import com.bossoverhere.capstone.boss_over_here_backend.global.error.SpotErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
