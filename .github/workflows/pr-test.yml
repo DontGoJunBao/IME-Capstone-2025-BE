@@ -17,6 +17,11 @@ permissions:
 
 jobs:
   test:
+    env:
+      SPRING_PROFILES_ACTIVE: test
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      AI_SERVER_URL: ${{ secrets.AI_SERVER_URL }}
+      KAKAO_USERINFO_URI: ${{ secrets.KAKAO_USERINFO_URI }}
 
     runs-on: ubuntu-latest
 

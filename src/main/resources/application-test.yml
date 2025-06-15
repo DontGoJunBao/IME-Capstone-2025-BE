@@ -8,14 +8,14 @@ spring:
     hibernate:
       ddl-auto: create
   jwt:
-    secret: B9B58C124AB734523FE27FF91F17184F3BFC7B6CD78E8A2D9EF4FA716EF83588149EED8ED22BABEA1B7781852F4FBAD9BD6EA4CDA4E15777381BF4415F75B11C
+    secret: ${JWT_SECRET}
     accessToken:
       expiration: 100000000
     refreshToken:
       expiration: 100000000
-# 여기부터가 빠져서 에러가 난 부분
+
 ai:
   server:
-    url: http://172.16.21.144:8000/plan
+    url: ${AI_SERVER_URL}
 oauth:
-  kakaoUserInfoUri: https://kapi.kakao.com/v2/user/me
+  kakaoUserInfoUri: ${KAKAO_USERINFO_URI}
