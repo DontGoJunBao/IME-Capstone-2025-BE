@@ -19,9 +19,7 @@ public class RecommendValuePick {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "recommend_id", nullable = false)
-    private Recommend recommend;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "value_pick_id", nullable = false)
@@ -40,7 +38,5 @@ public class RecommendValuePick {
     }
 
 
-    public void addRecommend(Recommend recommend) {
-        this.recommend = recommend;
-    }
+
 }
