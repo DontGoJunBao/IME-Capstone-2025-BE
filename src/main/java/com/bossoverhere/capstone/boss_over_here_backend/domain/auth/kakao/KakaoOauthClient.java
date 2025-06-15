@@ -27,7 +27,7 @@ public class KakaoOauthClient implements OauthClient {
         HttpEntity<Object> entity = new HttpEntity<>(headers);
 
 
-        ResponseEntity<JsonNode> response = restTemplate.exchange( userInfoUri, HttpMethod.GET, entity, JsonNode.class);
+        ResponseEntity<JsonNode> response = restTemplate.exchange(userInfoUri, HttpMethod.GET, entity, JsonNode.class);
         if (response.getStatusCode().is2xxSuccessful()) {
             return response.getBody().get("id").asText();
         }

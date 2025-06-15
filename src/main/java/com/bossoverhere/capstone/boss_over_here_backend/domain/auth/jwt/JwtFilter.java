@@ -1,6 +1,9 @@
 package com.bossoverhere.capstone.boss_over_here_backend.domain.auth.jwt;
 
 
+import com.bossoverhere.capstone.boss_over_here_backend.global.error.AuthErrorCode;
+import com.bossoverhere.capstone.boss_over_here_backend.global.error.ErrorCode;
+import com.bossoverhere.capstone.boss_over_here_backend.global.error.ErrorResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.ExpiredJwtException;

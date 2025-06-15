@@ -1,6 +1,7 @@
 package com.bossoverhere.capstone.boss_over_here_backend.domain.auth.controller;
 
 import com.bossoverhere.capstone.boss_over_here_backend.domain.auth.service.LogoutService;
+import com.bossoverhere.capstone.boss_over_here_backend.global.common.dto.CommonResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
