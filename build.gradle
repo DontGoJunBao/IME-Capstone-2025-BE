@@ -50,7 +50,7 @@ dependencies {
 	implementation 'com.opencsv:opencsv:5.5'
 
 	//mysql 세팅 추가
-	//runtimeOnly 'com.mysql:mysql-connector-j'
+	runtimeOnly 'com.mysql:mysql-connector-j'
 
 
 
